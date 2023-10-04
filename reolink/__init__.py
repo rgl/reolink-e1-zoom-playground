@@ -23,6 +23,19 @@ class ChannelStatus:
         return f"ChannelStatus(channel={self.channel}, name='{self.name}', online={self.online}, typeInfo='{self.typeInfo}')"
 
 
+class RtspUrl:
+    def __init__(self, channel: int, main_stream_url: str, sub_stream_url: str):
+        self.channel = channel
+        self.main_stream_url = main_stream_url
+        self.sub_stream_url = sub_stream_url
+
+    def __str__(self):
+        return f"RtspUrl: {self.channel}, MainStreamUrl: {self.main_stream_url}, SubStreamUrl: {self.sub_stream_url}"
+
+    def __repr__(self):
+        return f"RtspUrl(channel={self.channel}, main_stream_url='{self.main_stream_url}', sub_stream_url={self.sub_stream_url})"
+
+
 class Camera:
     '''NB this was only tested in a Reolink E1 Zoom camera.'''
 
@@ -240,3 +253,26 @@ class Camera:
                     online=item['online'],
                     typeInfo=item['typeInfo']))
         return channel_statuses
+
+    def get_rtsp_url(self) -> RtspUrl:
+        response = requests.post(
+            verify=False,
+            url=f"{self._url}/api.cgi",
+            params={
+                "cmd": "GetRtspUrl",
+                "token": self._token,
+            },
+            json=[
+                {
+                    "cmd": "GetRtspUrl",
+                }
+            ])
+        response.raise_for_status()
+        r = response.json()[0]
+        if r["code"] != 0:
+            raise Exception(f"failed to get rtsp url. response={r}")
+        result = r["value"]["rtspUrl"]
+        return RtspUrl(
+            channel=result["channel"],
+            main_stream_url=result["mainStream"],
+            sub_stream_url=result["subStream"])

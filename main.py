@@ -39,6 +39,10 @@ def main():
     channel_status = camera.get_channel_status()
     print(f"channel status: {channel_status}")
 
+    rtsp_url = camera.get_rtsp_url()
+    print(f"rtsp main stream url: {rtsp_url.main_stream_url}")
+    print(f"rtsp sub stream url: {rtsp_url.sub_stream_url}")
+
     print(f"Setting the dev name...")
     camera.set_dev_name('Test')
 
