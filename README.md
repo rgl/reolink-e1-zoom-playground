@@ -39,3 +39,22 @@ Run:
 ```bash
 python3 main.py
 ```
+
+# React Web Application Usage (Ubuntu 22.04)
+
+Install the dependencies:
+
+```bash
+wget -qO- \
+    https://github.com/bluenviron/mediamtx/releases/download/v1.1.1/mediamtx_v1.1.1_linux_amd64.tar.gz \
+    | tar xzf - mediamtx
+./mediamtx
+```
+
+Run:
+
+```bash
+cd react
+npm ci
+npm run serve
+```

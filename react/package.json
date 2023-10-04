@@ -1,0 +1,30 @@
+{
+  "name": "reolink-e1-zoom-camera",
+  "version": "1.0.0",
+  "description": "E1 Zoom Camera Playground",
+  "scripts": {
+    "build": "npx webpack --mode=production --progress",
+    "build:debug": "npx webpack --mode=development --progress",
+    "watch": "npx webpack --mode=development --progress --watch",
+    "serve": "npx webpack serve --mode=development --progress"
+  },
+  "author": "Rui Lopes",
+  "license": "ISC",
+  "dependencies": {
+    "hls.js": "^1.4.12",
+    "whip-whep": "^1.0.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-react": "^7.22.15",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^6.8.1",
+    "favicons": "^7.1.4",
+    "favicons-webpack-plugin": "^6.0.1",
+    "html-webpack-plugin": "^5.5.3",
+    "react-dom": "^18.2.0",
+    "style-loader": "^3.3.3",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  }
+}

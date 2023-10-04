@@ -1,0 +1,9 @@
+body {
+    margin: 8px;
+    padding: 0;
+}
+
+.players {
+    display: flex;
+    gap: 8px;
+}

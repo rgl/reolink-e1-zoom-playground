@@ -1,0 +1,7 @@
+logLevel: info
+#logLevel: debug
+paths:
+  camera_main:
+    source: rtsp://viewer:viewer@192.168.1.126:554/Preview_01_main
+  camera_sub:
+    source: rtsp://viewer:viewer@192.168.1.126:554/Preview_01_sub
