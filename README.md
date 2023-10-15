@@ -4,7 +4,7 @@ This is a [Reolink E1 Zoom Camera](https://reolink.com/product/e1-zoom/) Playgro
 
 The used [Camera HTTP API is documented by the vendor](reolink-camera-http-api-user-guide.pdf).
 
-This was tested on a E1 Zoom Camera with the `IPC_566SD664M5MP` hardware version.
+This was tested on a E1 Zoom Camera with the `IPC_566SD664M5MP` hardware version and the `v3.1.0.2649_23083101` firmware version.
 
 # Notes
 
