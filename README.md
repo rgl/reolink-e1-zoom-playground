@@ -46,7 +46,7 @@ Install the dependencies:
 
 ```bash
 wget -qO- \
-    https://github.com/bluenviron/mediamtx/releases/download/v1.2.0/mediamtx_v1.2.0_linux_amd64.tar.gz \
+    https://github.com/bluenviron/mediamtx/releases/download/v1.2.1/mediamtx_v1.2.1_linux_amd64.tar.gz \
     | tar xzf - mediamtx
 ./mediamtx
 ```

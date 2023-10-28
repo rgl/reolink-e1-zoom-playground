@@ -1,4 +1,4 @@
-// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.2.0/internal/core/webrtc_read_index.html
+// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.2.1/internal/core/webrtc_read_index.html
 
 const restartPause = 2000;
 
@@ -122,7 +122,7 @@ export class WHEPClient {
         this.video = video;
         this.pc = null;
         this.restartTimeout = null;
-        this.eTag = '';
+        this.sessionUrl = '';
         this.queuedCandidates = [];
         this.start();
     }
@@ -161,7 +161,21 @@ export class WHEPClient {
             this.pc = null;
         }
 
-        this.eTag = '';
+        if (this.sessionUrl) {
+            fetch(this.sessionUrl, {
+                method: 'DELETE',
+            })
+                .then((res) => {
+                    if (res.status !== 200) {
+                        throw new Error('bad status code');
+                    }
+                })
+                .catch((err) => {
+                    console.log('delete session error: ' + err);
+                });
+        }
+        this.sessionUrl = '';
+
         this.queuedCandidates = [];
 
         this.state = "stopped";
@@ -216,7 +230,7 @@ export class WHEPClient {
                 if (res.status !== 201) {
                     throw new Error('bad status code');
                 }
-                this.eTag = res.headers.get('ETag');
+                this.sessionUrl = new URL(res.headers.get('location'), this.url).toString();
                 return res.text();
             })
             .then((sdp) => this.onRemoteAnswer(new RTCSessionDescription({
@@ -261,7 +275,7 @@ export class WHEPClient {
         }
 
         if (evt.candidate !== null) {
-            if (this.eTag === '') {
+            if (this.sessionUrl === '') {
                 this.queuedCandidates.push(evt.candidate);
             } else {
                 this.sendLocalCandidates([evt.candidate])
@@ -270,11 +284,11 @@ export class WHEPClient {
     }
 
     sendLocalCandidates(candidates) {
-        fetch(this.url, {
+        fetch(this.sessionUrl, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/trickle-ice-sdpfrag',
-                'If-Match': this.eTag,
+                'If-Match': '*',
             },
             body: generateSdpFragment(this.offerData, candidates),
         })
