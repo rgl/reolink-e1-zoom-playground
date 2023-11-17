@@ -1,4 +1,4 @@
-// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.2.1/internal/core/webrtc_read_index.html
+// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.3.0/internal/core/webrtc_read_index.html
 
 const restartPause = 2000;
 
