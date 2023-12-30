@@ -1,4 +1,4 @@
-// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.3.0/internal/core/webrtc_read_index.html
+// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.4.1/internal/servers/webrtc/read_index.html
 
 const restartPause = 2000;
 
@@ -193,6 +193,8 @@ export class WHEPClient {
     onIceServers(res) {
         this.pc = new RTCPeerConnection({
             iceServers: linkToIceServers(res.headers.get('Link')),
+            // https://webrtc.org/getting-started/unified-plan-transition-guide
+            sdpSemantics: 'unified-plan',
         });
 
         const direction = "sendrecv";
