@@ -58,3 +58,7 @@ cd react
 npm ci
 npm run serve
 ```
+
+Use:
+
+http://localhost:8080
