@@ -10,10 +10,12 @@ import Hls from 'hls.js';
 // see https://github.com/video-dev/hls.js#using-hlsjs
 // see https://github.com/video-dev/hls.js/blob/v1.4.12/docs/API.md
 export function CameraHlsVideoPlayer() {
+    const [errorMessage, setErrorMessage] = useState("");
     const ref = useRef(null);
     useEffect(() => {
         if (!Hls.isSupported()) {
             console.log("hls: fatal error, your browser is not supported");
+            setErrorMessage("Your browser is not supported");
             return;
         }
         const videoEl = ref.current;
@@ -28,6 +30,7 @@ export function CameraHlsVideoPlayer() {
         });
         player.on(Hls.Events.MANIFEST_PARSED, () => {
             console.log('hls: manifest parsed');
+            setErrorMessage("");
             videoEl.play();
         });
         player.on(Hls.Events.DESTROYING, () => {
@@ -35,16 +38,18 @@ export function CameraHlsVideoPlayer() {
         });
         player.on(Hls.Events.ERROR, (event, data) => {
             if (!data.fatal) {
+                console.warn('hls: non-fatal error encountered, continue playback', data);
                 return;
             }
-            // TODO trickle these errors to the UI.
             switch (data.type) {
                 case Hls.ErrorTypes.MEDIA_ERROR:
                     console.log('hls: fatal media error encountered, try to recover');
+                    setErrorMessage(`Fatal media error encountered. ${data.type}/${data.details}: ${data.error}`);
                     player.recoverMediaError();
                     break;
                 case Hls.ErrorTypes.NETWORK_ERROR:
                     console.error('hls: fatal network error encountered', data);
+                    setErrorMessage(`Fatal network error encountered. ${data.type}/${data.details}: ${data.error}`);
                     // All retries and media options have been exhausted.
                     // Immediately trying to restart loading could cause loop loading.
                     // Consider modifying loading policies to best fit your asset and network
@@ -54,12 +59,13 @@ export function CameraHlsVideoPlayer() {
                 default:
                     // cannot recover.
                     console.error('hls: fatal error encountered', data);
+                    setErrorMessage(`Fatal error encountered. ${data.type}/${data.details}: ${data.error}`);
                     player.destroy();
                     // TODO: retry creating the hls player.
                     break;
             }
         });
-        player.loadSource('http://localhost:8888/camera_sub/stream.m3u8');
+        player.loadSource('http://localhost:8888/camera_sub/index.m3u8');
         player.attachMedia(videoEl);
         return () => {
             console.log('hls: destroying the video player...');
@@ -69,6 +75,7 @@ export function CameraHlsVideoPlayer() {
     }, []);
     return (
         <div>
+            {errorMessage && <div className="error">⚠️ {errorMessage}</div>}
             <video ref={ref} autoPlay playsInline />
         </div>
     );

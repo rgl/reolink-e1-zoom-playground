@@ -4,7 +4,7 @@ This is a [Reolink E1 Zoom Camera](https://reolink.com/product/e1-zoom/) Playgro
 
 The used [Camera HTTP API is documented by the vendor](reolink-camera-http-api-user-guide.pdf).
 
-This was tested on a E1 Zoom Camera with the `IPC_566SD664M5MP` hardware version and the `v3.1.0.2649_23083101` firmware version.
+This was tested on a E1 Zoom Camera with the `IPC_566SD664M5MP` hardware version and the `v3.1.0.4417_2412122178` firmware version.
 
 # Notes
 
@@ -13,8 +13,8 @@ This was tested on a E1 Zoom Camera with the `IPC_566SD664M5MP` hardware version
   * See https://community.reolink.com/topic/4196/reolink-camera-api-user-guide_v8-updated-in-april-2023/13?post_id=25827
 * The Camera supports [RTSP](https://en.wikipedia.org/wiki/Real_Time_Streaming_Protocol) and [FLV](https://en.wikipedia.org/wiki/Flash_Video) (using [HTTP progressive download](https://en.wikipedia.org/wiki/Progressive_download)) streaming.
 * To view the Camera streams, we can use `ffplay` as, e.g.:
-  * `ffplay rtsp://viewer:viewer@127.0.0.123:554/Preview_01_main`
-  * `ffplay rtsp://viewer:viewer@127.0.0.123:554/Preview_01_sub`
+  * `ffplay rtsp://viewer:viewer@192.168.8.5:554/Preview_01_main`
+  * `ffplay rtsp://viewer:viewer@192.168.8.5:554/Preview_01_sub`
 
 # Python CLI Usage (Ubuntu)
 
@@ -22,7 +22,7 @@ Set the Camera URL and credentials:
 
 ```bash
 cat >.env <<'EOF'
-CAMERA_URL="https://192.168.1.123"
+CAMERA_URL="https://192.168.8.5"
 CAMERA_USERNAME="admin"
 CAMERA_PASSWORD="admin"
 EOF
@@ -42,16 +42,16 @@ python3 main.py
 
 # React Web Application Usage (Ubuntu 22.04)
 
-Install the dependencies:
+Install and run MediaMTX:
 
 ```bash
 wget -qO- \
-    https://github.com/bluenviron/mediamtx/releases/download/v1.4.1/mediamtx_v1.4.1_linux_amd64.tar.gz \
-    | tar xzf - mediamtx
+  https://github.com/bluenviron/mediamtx/releases/download/v1.14.0/mediamtx_v1.14.0_linux_amd64.tar.gz \
+  | tar xzf - mediamtx
 ./mediamtx
 ```
 
-Run:
+In another shell, install and run the app:
 
 ```bash
 cd react
@@ -59,6 +59,6 @@ npm ci
 npm run serve
 ```
 
-Use:
+Access the app with your web browser:
 
 http://localhost:8080
