@@ -11,7 +11,7 @@
   "author": "Rui Lopes",
   "license": "ISC",
   "dependencies": {
-    "hls.js": "^1.6.12"
+    "hls.js": "^1.6.13"
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",

@@ -1,5 +1,5 @@
-// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.14.0/internal/servers/webrtc/reader.js
-// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.14.0/internal/servers/webrtc/read_index.html
+// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.15.1/internal/servers/webrtc/reader.js
+// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.15.1/internal/servers/webrtc/read_index.html
 
 'use strict';
 
@@ -17,6 +17,9 @@
  * @typedef Conf
  * @type {object}
  * @property {string} url - absolute URL of the WHEP endpoint.
+ * @property {string} user - username.
+ * @property {string} pass - password.
+ * @property {string} token - token.
  * @property {OnError} onError - called when there's an error.
  * @property {OnTrack} onTrack - called when there's a track available.
  */
@@ -406,9 +409,23 @@ export class MediaMTXWebRTCReader {
       });
   }
 
+  #authHeader() {
+    if (this.conf.user !== undefined && this.conf.user !== '') {
+      const credentials = btoa(`${this.conf.user}:${this.conf.pass}`);
+      return {'Authorization': `Basic ${credentials}`};
+    }
+    if (this.conf.token !== undefined && this.conf.token !== '') {
+      return {'Authorization': `Bearer ${this.conf.token}`};
+    }
+    return {};
+  }
+
   #requestICEServers() {
     return fetch(this.conf.url, {
       method: 'OPTIONS',
+      headers: {
+        ...this.#authHeader(),
+      },
     })
       .then((res) => MediaMTXWebRTCReader.#linkToIceServers(res.headers.get('Link')));
   }
@@ -449,7 +466,10 @@ export class MediaMTXWebRTCReader {
 
     return fetch(this.conf.url, {
       method: 'POST',
-      headers: {'Content-Type': 'application/sdp'},
+      headers: {
+        ...this.#authHeader(),
+        'Content-Type': 'application/sdp',
+      },
       body: offer,
     })
       .then((res) => {
