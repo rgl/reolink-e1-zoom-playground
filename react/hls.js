@@ -8,7 +8,7 @@ import Hls from 'hls.js';
 // see https://react.dev/learn/responding-to-events
 // see https://react.dev/learn/state-a-components-memory
 // see https://github.com/video-dev/hls.js#using-hlsjs
-// see https://github.com/video-dev/hls.js/blob/v1.4.12/docs/API.md
+// see https://github.com/video-dev/hls.js/blob/v1.6.15/docs/API.md
 export function CameraHlsVideoPlayer() {
     const [errorMessage, setErrorMessage] = useState("");
     const ref = useRef(null);

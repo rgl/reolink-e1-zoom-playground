@@ -31,6 +31,8 @@ EOF
 Install the dependencies:
 
 ```bash
+python3 -m venv --system-site-packages .venv
+source .venv/bin/activate
 python3 -m pip install -r requirements.txt
 ```
 
@@ -40,13 +42,13 @@ Run:
 python3 main.py
 ```
 
-# React Web Application Usage (Ubuntu 22.04)
+# React Web Application Usage (Ubuntu 24.04)
 
 Install and run MediaMTX:
 
 ```bash
 wget -qO- \
-  https://github.com/bluenviron/mediamtx/releases/download/v1.15.1/mediamtx_v1.15.1_linux_amd64.tar.gz \
+  https://github.com/bluenviron/mediamtx/releases/download/v1.15.6/mediamtx_v1.15.6_linux_amd64.tar.gz \
   | tar xzf - mediamtx
 ./mediamtx
 ```

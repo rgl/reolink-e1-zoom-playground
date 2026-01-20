@@ -1,5 +1,5 @@
-// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.15.1/internal/servers/webrtc/reader.js
-// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.15.1/internal/servers/webrtc/read_index.html
+// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.15.6/internal/servers/webrtc/reader.js
+// NB this is a modified version of https://github.com/bluenviron/mediamtx/blob/v1.15.6/internal/servers/webrtc/read_index.html
 
 'use strict';
 
