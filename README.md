@@ -48,7 +48,7 @@ Install and run MediaMTX:
 
 ```bash
 wget -qO- \
-  https://github.com/bluenviron/mediamtx/releases/download/v1.15.6/mediamtx_v1.15.6_linux_amd64.tar.gz \
+  https://github.com/bluenviron/mediamtx/releases/download/v1.19.2/mediamtx_v1.19.2_linux_amd64.tar.gz \
   | tar xzf - mediamtx
 ./mediamtx
 ```
